@@ -39,7 +39,7 @@ There will be some issues for fully configuring for yourself:
 - Because the application uses multi-language routing (by default supports EN, RU and KA), you should accommodate for the languages you want to support.
   1.  Inside `i18n.json` change `locales` array to language set you want
   2.  Remove the locales you don't use from `locales` folder
-  3.  Inside `components/WithLayout/navbar.js` you should remove unused language objects from `languages` array add for the languages you gonna use
+  3.  Inside `components/WithLayout/navbar.js` you should remove unused language objects from `languages` array and add for the languages you gonna use
   4.  Inside `components/CommonHead/index.js` you should remove `link rel="alternate"` tags for languages you don't use and add for the languages you gonna use
   5.  Inside `components/ErrorBoundaryFallback/index.js` you should remove language objects from `locales` for languages you don't use and add for the languages you gonna use
   6.  By default there are 2 fonts (Noto Sans and Noto Sans Georgian) which, combined, support Latin, Cyrillic and Georgian alphabets. You should change these fonts to accommodate for your language needs. To change font files, go to `public/fonts` and remove/add necessary font files. Then, change their locations inside `styles/globals.css` (also, their names inside `font-family`) and names in `config/theme.js` inside `typography -> fontFamily`
