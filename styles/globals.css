@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Noto Sans Georgian";
+  src: url("/fonts/noto-sans-georgian.woff2");
+}
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/fonts/noto-sans.woff2");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Noto Sans, Noto Sans Georgian, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Noto Sans, Noto Sans Georgian, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
+}
