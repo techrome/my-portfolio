@@ -52,8 +52,8 @@ There will be some issues for fully configuring for yourself:
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | NEXT_PUBLIC_API_URL                | The Storyblok api main url. You mostly don't need to change it                                                                 |
 | NEXT_PUBLIC_API_TOKEN              | Your Storyblok public token of the space. There's no way it should be secret because it's used in the client side all the time |
-| NEXT_PUBLIC_API_INFO_PART          | The name of you main info blok                                                                                                 |
-| NEXT_PUBLIC_API_PROJECTS_LIST_PART | The name of you projects folder                                                                                                |
+| NEXT_PUBLIC_API_INFO_PART          | The name of your main info blok                                                                                                |
+| NEXT_PUBLIC_API_PROJECTS_LIST_PART | The name of your projects folder                                                                                               |
 | NEXT_PUBLIC_WEBSITE_URL            | Url of your website                                                                                                            |
 | NEXT_PUBLIC_WEBSITE_NAME           | Name of your website                                                                                                           |
 
