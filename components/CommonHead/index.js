@@ -9,15 +9,15 @@ const CommonHead = ({ ...props }) => {
 
   return (
     <Head>
-      <link rel="canonical" href={`${prodUrl}/en${router.asPath}`} />
+      <link rel="canonical" href={`${prodUrl}/en${router.pathname}`} />
       <link
         rel="alternate"
-        href={`${prodUrl}/ka${router.asPath}`}
+        href={`${prodUrl}/ka${router.pathname}`}
         hrefLang="ka"
       />
       <link
         rel="alternate"
-        href={`${prodUrl}/ru${router.asPath}`}
+        href={`${prodUrl}/ru${router.pathname}`}
         hrefLang="ru"
       />
       <link
@@ -37,7 +37,7 @@ const CommonHead = ({ ...props }) => {
         sizes="16x16"
         href="/favicon-16x16.png"
       />
-      <meta property="og:url" content={`${prodUrl}${router.asPath}`} />
+      <meta property="og:url" content={`${prodUrl}${router.pathname}`} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
   );
