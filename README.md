@@ -2,6 +2,8 @@
 
 This project was built with Next.js and Storyblok CMS.
 
+Live version: [https://alextech.dev/](https://alextech.dev/)
+
 I wanted it to be as much decoupled from an actual data as possible. That's why I used an external CMS. You can even build your own portfolio if you follow the same content structure as used in this application. More about that in "Configure application for yourself" section.
 
 ## Important: you must read `next-translate` docs if you want to develop this application!
@@ -66,7 +68,7 @@ There will be some issues for fully configuring for yourself:
 | avatar           | Asset - Images                                   | yes      | -            | Image used when sharing the page on social media                                                                                                       |
 | full_name        | Text                                             | yes      | yes          | Full name of the person                                                                                                                                |
 | profession       | Text                                             | yes      | yes          | Profession                                                                                                                                             |
-| skills           | Text                                             | yes      | -            | The skills. You should separate each skill with value provided inside `skills_separator`. E.g `Next.js--React.js` where the separator is `--`          |
+| skills           | Text                                             | yes      | yes          | The skills. You should separate each skill with value provided inside `skills_separator`. E.g `Next.js--React.js` where the separator is `--`          |
 | skills_separator | Text                                             | yes      | -            | Text by which `skills` will be split                                                                                                                   |
 | contacts         | Blocks - Only `contact` component to be inserted | yes      | -            | Array of `contact` Blocks (more about that in Contact section)                                                                                         |
 | about_me         | Plugin - wysiwyg-tinymce                         | yes      | yes          | Info about the person. Is an HTML editor                                                                                                               |
@@ -77,7 +79,7 @@ There will be some issues for fully configuring for yourself:
 | Field name | Type           | Required | Translatable | Description                                                  |
 | ---------- | -------------- | -------- | ------------ | ------------------------------------------------------------ |
 | url        | Text           | yes      | -            | Link                                                         |
-| title      | Text           | yes      | -            | Title                                                        |
+| title      | Text           | yes      | yes          | Title                                                        |
 | icon       | Asset - Images | yes      | -            | Icon (should be `.svg` type and support `fill` CSS property) |
 
 #### Project
@@ -86,7 +88,7 @@ There will be some issues for fully configuring for yourself:
 | ---------- | ------------------------ | -------- | ------------ | ------------------------------------------------ |
 | image      | Asset - Images           | yes      | -            | Image (must be square to be displayed properly)  |
 | title      | Text                     | yes      | yes          | Title                                            |
-| url        | Link                     | -        | -            | Link to the website                              |
+| url        | Link                     | -        | yes          | Link to the website                              |
 | code_url   | Link                     | -        | -            | Link to the source code                          |
 | details    | Plugin - wysiwyg-tinymce | -        | yes          | Detail info about the project. Is an HTML editor |
 
