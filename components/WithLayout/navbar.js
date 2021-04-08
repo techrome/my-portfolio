@@ -118,8 +118,8 @@ const Navbar = ({ isDarkMode, setIsDarkMode, ...props }) => {
                     component="a"
                     href={
                       lang.value === "en"
-                        ? router.asPath
-                        : `/${lang.value}${router.asPath}`
+                        ? router.pathname
+                        : `/${lang.value}${router.pathname}`
                     }
                     key={index}
                     selected={router.locale === lang.value}
