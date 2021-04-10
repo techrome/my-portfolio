@@ -30,11 +30,7 @@ const useStyles = makeStyles(
     },
     contactWrapper: {
       display: "flex",
-      alignItems: "center",
-      textDecoration: "underline",
-      "&:hover": {
-        textDecoration: "none"
-      }
+      alignItems: "center"
     },
     contactIcon: {
       marginRight: theme.spacing(0.5),
