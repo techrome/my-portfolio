@@ -2,14 +2,17 @@ import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-import { prodUrl } from "@/config";
+import { prodUrl, defaultLocale } from "@/config";
 
 const CommonHead = ({ ...props }) => {
   const router = useRouter();
 
   return (
     <Head>
-      <link rel="canonical" href={`${prodUrl}/en${router.pathname}`} />
+      <link
+        rel="canonical"
+        href={`${prodUrl}/${defaultLocale}${router.pathname}`}
+      />
       <link
         rel="alternate"
         href={`${prodUrl}/ka${router.pathname}`}

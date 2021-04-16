@@ -22,10 +22,10 @@ import useTranslation from "next-translate/useTranslation";
 
 import Container from "@/components/Container";
 import { darkModeSet } from "@/redux/actions/app";
-import { siteName } from "@/config";
+import { siteName, defaultLocale } from "@/config";
 
 const languages = [
-  { title: "_english", value: "en" },
+  { title: "_english", value: defaultLocale },
   { title: "_russian", value: "ru" },
   { title: "_georgian", value: "ka" }
 ];
@@ -117,7 +117,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, ...props }) => {
                   <MenuItem
                     component="a"
                     href={
-                      lang.value === "en"
+                      lang.value === defaultLocale
                         ? router.pathname
                         : `/${lang.value}${router.pathname}`
                     }

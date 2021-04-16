@@ -16,6 +16,7 @@ import defaultTheme, {
   lightThemePalette,
   darkThemePalette
 } from "@/config/theme";
+import { defaultLocale } from "@/config";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import CommonHead from "@/components/CommonHead";
 import GlobalStyles from "@/components/GlobalStyles";
@@ -62,7 +63,8 @@ function MyApp({ Component, pageProps, isDarkMode, setIsDarkMode, ...props }) {
         ...defaultTheme.overrides
       },
       props: {
-        ...(themeLocalesProps[router.locale] || themeLocalesProps.en)
+        ...(themeLocalesProps[router.locale] ||
+          themeLocalesProps[defaultLocale])
       }
     });
   }, [prefersDarkMode, isDarkMode]);

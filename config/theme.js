@@ -2,6 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ruRU } from "@material-ui/core/locale";
 
 import muiLocaleKa from "./muiLocaleKa";
+import { defaultLocale } from "@/config";
 
 export const lightThemePalette = {
   primary: {
@@ -154,7 +155,7 @@ theme.typography.caption = {
 };
 
 export const themeLocalesProps = {
-  en: theme.props,
+  [defaultLocale]: theme.props,
   ru: ruRU,
   ka: muiLocaleKa.props
 };

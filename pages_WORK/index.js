@@ -23,7 +23,8 @@ import {
   apiInfoPart,
   apiProjectsListPart,
   listItemsPerPage,
-  siteName
+  siteName,
+  defaultLocale
 } from "@/config";
 import * as c from "@/constants";
 
@@ -108,14 +109,12 @@ const Home = ({ ...props }) => {
 export const getStaticProps = async ({ locale }) => {
   const queryClient = createQueryClient();
   const { cacheTimestamp } = await prepareGlobalData({ queryClient });
+  const localePrefix = locale !== defaultLocale ? `${locale}/` : "";
 
   await queryClient.prefetchQuery(
-    createQueryKey(
-      [`/stories/${locale !== "en" ? `${locale}/` : ""}${apiInfoPart}`],
-      {
-        cacheTimestamp
-      }
-    )
+    createQueryKey([`/stories/${localePrefix}${apiInfoPart}`], {
+      cacheTimestamp
+    })
   );
   await queryClient.prefetchQuery(
     createQueryKey(
@@ -123,9 +122,7 @@ export const getStaticProps = async ({ locale }) => {
         `/stories`,
         {
           params: {
-            [c.starts_with]: `${
-              locale !== "en" ? `${locale}/` : ""
-            }${apiProjectsListPart}/`,
+            [c.starts_with]: `${localePrefix}${apiProjectsListPart}/`,
             [c.per_page]: listItemsPerPage,
             [c.page]: 1
           }

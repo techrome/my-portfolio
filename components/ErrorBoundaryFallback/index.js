@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import useStyles from "./styles";
 import { Button } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 
+import useStyles from "./styles";
+import { defaultLocale } from "@/config";
+
 const locales = {
-  en: {
+  [defaultLocale]: {
     description:
       "An unexpected error occured. We are sorry for the inconvenience. Error:",
     button: "Recover page"
@@ -24,18 +26,20 @@ const ErrorBoundaryFallback = ({ error, resetErrorBoundary, ...props }) => {
   const cls = useStyles();
   const [lang] = useState(
     typeof document === "undefined"
-      ? "en"
-      : document?.documentElement?.lang || "en"
+      ? defaultLocale
+      : document?.documentElement?.lang || defaultLocale
   );
   return (
     <div className={cls.main}>
       <ErrorIcon style={{ fontSize: "50px" }} color="error" />
       <p className={cls.description}>
-        {locales[lang] ? locales[lang].description : locales.en.description}
+        {locales[lang]
+          ? locales[lang].description
+          : locales[defaultLocale].description}
       </p>
       <p className={cls.error}>{error?.message || "No error description"}</p>
       <Button variant="contained" color="default" onClick={resetErrorBoundary}>
-        {locales[lang] ? locales[lang].button : locales.en.button}
+        {locales[lang] ? locales[lang].button : locales[defaultLocale].button}
       </Button>
     </div>
   );

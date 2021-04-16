@@ -1,3 +1,5 @@
+import { defaultLocale as defaultLocaleMain } from "@/i18n.json";
+
 export const isdev = process.env.NODE_ENV !== "production";
 
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -9,12 +11,14 @@ export const apiProjectsListPart =
 export const prodUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
 export const siteName = process.env.NEXT_PUBLIC_WEBSITE_NAME;
 
+export const defaultLocale = defaultLocaleMain;
+
 export const iconGlobalClassName = "default-icon";
 
 export const langClientSide =
   typeof document === "undefined"
-    ? "en"
-    : document.documentElement.lang || "en";
+    ? defaultLocale
+    : document.documentElement.lang || defaultLocale;
 
 export const listItemsPerPage = 10;
 export const revalidatePageSeconds = 60 * 60 * 24;
