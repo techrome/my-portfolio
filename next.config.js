@@ -5,5 +5,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 module.exports = withBundleAnalyzer({
-  i18n: { locales, defaultLocale }
+  i18n: { locales, defaultLocale },
+  compress: false
 });
