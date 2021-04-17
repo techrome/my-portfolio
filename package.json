@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next-translate && next dev",
     "prod": "yarn build && yarn start",
-    "build": "next-translate && next build",
+    "build": "next-translate && next build && next-sitemap --config custom-next-sitemap.js",
     "start": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
