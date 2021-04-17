@@ -6,7 +6,8 @@ const DummyComponent = () => {
 };
 
 export const getServerSideProps = async (context) => {
-  //console.log("context", context);
+  const rand = Math.random();
+  console.log("Rnadom number", rand);
 
   if (context && context.res) {
     const { res } = context;
@@ -16,7 +17,7 @@ export const getServerSideProps = async (context) => {
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate");
 
     // Write the sitemap context to resonse
-    res.write(`${Math.random()} / DYNAMIC`);
+    res.write(`${rand} / DYNAMIC`);
 
     // End response
     res.end();
