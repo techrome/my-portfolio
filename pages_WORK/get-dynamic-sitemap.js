@@ -1,5 +1,10 @@
 import * as fs from "fs/promises";
 
+// Just to prevent next.js errors
+const DummyComponent = () => {
+  return null;
+};
+
 export const getStaticProps = async ({ locale }) => {
   try {
     await fs.writeFile("public/dynamic-sitemaps/1.xml", "DYNAMIC DATAAAA");
@@ -14,11 +19,6 @@ export const getStaticProps = async ({ locale }) => {
       permanent: false
     }
   };
-};
-
-// Just to prevent next.js errors
-const DummyComponent = () => {
-  return null;
 };
 
 export default DummyComponent;
