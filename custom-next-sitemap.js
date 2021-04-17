@@ -1,4 +1,4 @@
-const { prodUrl } = require("@/config/index");
+const prodUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
 module.exports = {
   siteUrl: prodUrl,
