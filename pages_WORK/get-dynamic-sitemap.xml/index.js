@@ -9,12 +9,12 @@ const DummyComponent = () => {
 
 export const getServerSideProps = async (context) => {
   const rand = Math.random();
-  let res = {};
+  let axiosRes = {};
   if (context && context.res) {
     const { res } = context;
 
     try {
-      res = await axios.post("https://reqres.in/api/users", {
+      axiosRes = await axios.post("https://reqres.in/api/users", {
         title: `test-${rand}`
       });
     } catch (err) {}
@@ -22,7 +22,7 @@ export const getServerSideProps = async (context) => {
     res.setHeader("Content-Type", "text/plain");
     res.setHeader("Cache-Control", `s-maxage=${60}, stale-while-revalidate`);
 
-    res.write(`${res.data} / ${rand} / DYNAMIC`);
+    res.write(`${JSON.stringify(axiosRes.data)} / ${rand} / DYNAMIC`);
 
     res.end();
   }
