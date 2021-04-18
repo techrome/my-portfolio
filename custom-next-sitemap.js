@@ -4,8 +4,8 @@ module.exports = {
   siteUrl: prodUrl,
   generateRobotsTxt: true,
   sitemapSize: 7000,
-  exclude: ["/get-dynamic-sitemap"],
+  exclude: ["/get-dynamic-sitemap.xml"],
   robotsTxtOptions: {
-    additionalSitemaps: [`${prodUrl}/get-dynamic-sitemap`]
+    additionalSitemaps: [`${prodUrl}/get-dynamic-sitemap.xml`]
   }
 };
