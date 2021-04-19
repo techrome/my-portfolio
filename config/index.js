@@ -24,3 +24,5 @@ export const listItemsPerPage = 10;
 export const revalidatePageSeconds = 60 * 60 * 24;
 export const queryStaleTimeMs = 1000 * revalidatePageSeconds;
 export const queryCacheTimeMs = 1000 * revalidatePageSeconds;
+
+export const maxSitemapUrls = 7000;
