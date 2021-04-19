@@ -6,5 +6,13 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   i18n: { locales, defaultLocale },
-  compress: false
+  compress: false,
+  async rewrites() {
+    return [
+      {
+        source: "/blog/:postId",
+        destination: "/blog/:postId/no-slug"
+      }
+    ];
+  }
 });

@@ -18,10 +18,7 @@ export const getStaticProps = async (data) => {
     await sleep(2000);
   } catch (err) {}
 
-  if (
-    data.params?.postSlug?.[0] === res?.data &&
-    data.params?.postSlug?.length === 1
-  ) {
+  if (data.params?.postSlug === res?.data) {
     return { revalidate: 40, props: { rand: res?.data } };
   }
 
