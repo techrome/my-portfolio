@@ -18,6 +18,7 @@ import defaultTheme, {
 } from "@/config/theme";
 import { defaultLocale } from "@/config";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
+import NProgress from "@/components/NProgress";
 import CommonHead from "@/components/CommonHead";
 import GlobalStyles from "@/components/GlobalStyles";
 import createQueryClient from "@/helpers/createQueryClient";
@@ -108,6 +109,7 @@ function MyApp({ Component, pageProps, isDarkMode, setIsDarkMode, ...props }) {
             >
               <CommonHead />
               <GlobalStyles />
+              <NProgress color={theme.palette.primary.main} />
               <Component {...pageProps} />
               <ReactQueryDevtools initialIsOpen={false} />
             </SnackbarProvider>
