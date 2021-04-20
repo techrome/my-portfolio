@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { Paper, Divider } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import useTranslation from "next-translate/useTranslation";
@@ -103,9 +102,6 @@ const Home = ({ ...props }) => {
       <Container>
         <section className={cls.tabContent}>{renderTabContent()}</section>
       </Container>
-      <Link href="/blog/a">
-        <a>TO BLOG!!!</a>
-      </Link>
     </main>
   );
 };

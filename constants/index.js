@@ -1,4 +1,5 @@
 export const id = "id";
+export const slug = "slug";
 export const email = "email";
 export const name = "name";
 export const message = "message";

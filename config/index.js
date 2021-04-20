@@ -7,6 +7,7 @@ export const apiToken = process.env.NEXT_PUBLIC_API_TOKEN;
 export const apiInfoPart = process.env.NEXT_PUBLIC_API_INFO_PART;
 export const apiProjectsListPart =
   process.env.NEXT_PUBLIC_API_PROJECTS_LIST_PART;
+export const apiBlogListPart = process.env.NEXT_PUBLIC_API_BLOG_LIST_PART;
 
 export const prodUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
 export const siteName = process.env.NEXT_PUBLIC_WEBSITE_NAME;
@@ -25,4 +26,5 @@ export const revalidatePageSeconds = 60 * 60 * 24;
 export const queryStaleTimeMs = 1000 * revalidatePageSeconds;
 export const queryCacheTimeMs = 1000 * revalidatePageSeconds;
 
-export const maxSitemapUrls = 7000;
+export const maxSitemapUrls = 10000;
+export const maxQueryListItems = 100;

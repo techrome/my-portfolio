@@ -1,11 +1,9 @@
 import axios from "axios";
 
+import sleep from "@/helpers/sleep";
+
 const Dummy = ({ rand }) => {
   return <h1>YEAH - {rand}</h1>;
-};
-
-const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 export const getStaticProps = async (data) => {
