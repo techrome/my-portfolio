@@ -101,3 +101,7 @@ I tried using CSS variables for this and while it worked to some degree, it was 
 ### Using `index: 1` with `makeStyles` function
 
 I don't really know why, but in production, some of your custom styles go **before** MUI styles, and they get overridden. As far as I know, it has something to do with the import order of components, but I still can't figure out what causes this, so as an escape hatch, whenever you directly add a `className` to a MUI component, always append to its `makeStyles` function an argument `{ index: 1 }` so your custom styles will go **after** any MUI default styles
+
+# License
+
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE][license].
