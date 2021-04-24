@@ -104,4 +104,4 @@ I don't really know why, but in production, some of your custom styles go **befo
 
 # License
 
-This application is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
+This application is licensed under MIT. Full license text is available in [LICENSE](LICENSE).
