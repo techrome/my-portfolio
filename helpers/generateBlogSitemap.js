@@ -1,12 +1,12 @@
-import { promises as fs } from "fs";
-import path from "path";
 import toNumber from "lodash/toNumber";
+import { fs } from "memfs";
 
 import { locales } from "@/i18n.json";
 import defaultQueryFn from "@/helpers/defaultQueryFn";
 import createQueryKey from "@/helpers/createQueryKey";
 import splitArrayIntoChunks from "@/helpers/splitArrayIntoChunks";
 import buildSitemapXML from "@/helpers/buildSitemapXML";
+import * as remoteApi from "@/helpers/fileStorageApi";
 import sleep from "@/helpers/sleep";
 import {
   apiBlogListPart,
@@ -83,29 +83,35 @@ const generateBlogSitemap = async ({ cacheTimestamp }) => {
   const splittedFields = splitArrayIntoChunks(allFields, maxSitemapUrls);
   const readySitemaps = splittedFields.map((arr) => buildSitemapXML(arr));
 
-  const blogSitemapsFolder = path.join(
-    process.cwd(),
-    "public",
-    "dynamic-sitemaps",
-    "blog"
-  );
-  await fs.rmdir(blogSitemapsFolder, { recursive: true, maxRetries: 1 });
-  await fs.mkdir(blogSitemapsFolder);
+  const blogSitemapsFolder = "/sitemaps/blog";
+
+  try {
+    await remoteApi.deleteFiles([blogSitemapsFolder]);
+  } catch (err) {
+    // don't care if it fails here
+    // will fail if the folder doesn't exist yet
+  }
+
+  fs.mkdirSync(blogSitemapsFolder, { recursive: true });
 
   let sitemapPathsWeb = [];
+  let sitemapFilesRemote = [];
 
   for (let i = 0; i < readySitemaps.length; i++) {
     const fileName = `${i + 1}.xml`;
-    const sitemapFilePath = path.join(
-      process.cwd(),
-      "public",
-      "dynamic-sitemaps",
-      "blog",
-      fileName
+    const sitemapFilePath = `${blogSitemapsFolder}/${fileName}`;
+
+    await fs.writeFileSync(sitemapFilePath, readySitemaps[i]);
+
+    sitemapFilesRemote.push({ name: sitemapFilePath, path: sitemapFilePath });
+    sitemapPathsWeb.push(
+      `${process.env.FILE_STORAGE_WEBSITE_URL}${sitemapFilePath}`
     );
-    await fs.writeFile(sitemapFilePath, readySitemaps[i]);
-    sitemapPathsWeb.push(`${prodUrl}/dynamic-sitemaps/blog/${fileName}`);
   }
+
+  await remoteApi.uploadFiles(sitemapFilesRemote);
+
+  fs.rmdirSync(blogSitemapsFolder, { recursive: true });
 
   return sitemapPathsWeb;
 };
