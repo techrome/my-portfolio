@@ -2,7 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-import { prodUrl, defaultLocale } from "@/config";
+import { locales } from "@/i18n.json";
+import { prodUrl } from "@/config";
 
 const CommonHead = ({ ...props }) => {
   const router = useRouter();
@@ -11,18 +12,23 @@ const CommonHead = ({ ...props }) => {
     <Head>
       <link
         rel="canonical"
-        href={`${prodUrl}/${defaultLocale}${router.pathname}`}
+        href={`${prodUrl}/${router.locale}${router.pathname}`}
       />
       <link
         rel="alternate"
-        href={`${prodUrl}/ka${router.pathname}`}
-        hrefLang="ka"
+        href={`${prodUrl}${router.pathname}`}
+        hrefLang="x-default"
       />
-      <link
-        rel="alternate"
-        href={`${prodUrl}/ru${router.pathname}`}
-        hrefLang="ru"
-      />
+      <>
+        {locales.map((loc, index) => (
+          <link
+            key={index}
+            rel="alternate"
+            href={`${prodUrl}/${loc}${router.pathname}`}
+            hrefLang={loc}
+          />
+        ))}
+      </>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
