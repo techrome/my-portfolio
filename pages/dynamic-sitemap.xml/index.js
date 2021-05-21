@@ -1,7 +1,7 @@
-import createQueryClient from "@/helpers/createQueryClient";
-import prepareGlobalData from "@/helpers/prepareGlobalData";
-import generateBlogSitemap from "@/helpers/generateBlogSitemap";
-import buildSitemapXML from "@/helpers/buildSitemapXML";
+import createQueryClient from "@/helpers/api/createQueryClient";
+import prepareGlobalData from "@/helpers/api/prepareGlobalData";
+import generateBlogSitemap from "@/helpers/sitemap/generateBlogSitemap";
+import buildSitemapXML from "@/helpers/sitemap/buildSitemapXML";
 import { revalidatePageSeconds } from "@/config";
 
 // Just to prevent next.js errors
@@ -15,18 +15,23 @@ export const getServerSideProps = async (context) => {
   const queryClient = createQueryClient();
   const { cacheTimestamp } = await prepareGlobalData({ queryClient });
 
-  const blogSitemapFields = await (
-    await generateBlogSitemap({ cacheTimestamp })
-  ).map((path) => ({
-    loc: path
-  }));
+  const blogSitemapFields = (await generateBlogSitemap({ cacheTimestamp })).map(
+    (path) => ({
+      loc: path
+    })
+  );
+
+  const allSitemapFields = [...blogSitemapFields];
 
   if (context && context.res) {
     const { res } = context;
 
     res.setHeader("Content-Type", "application/xml");
-    res.setHeader("Cache-Control", `s-maxage=${60}, stale-while-revalidate`);
-    res.write(buildSitemapXML(blogSitemapFields, true));
+    res.setHeader(
+      "Cache-Control",
+      `s-maxage=${revalidatePageSeconds}, stale-while-revalidate=${revalidatePageSeconds}`
+    );
+    res.write(buildSitemapXML(allSitemapFields, true));
     res.end();
   }
 

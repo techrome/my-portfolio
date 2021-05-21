@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { Paper, Divider } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
-import useTranslation from "next-translate/useTranslation";
 import { dehydrate } from "react-query/hydration";
 import domPurify from "dompurify";
 
@@ -13,11 +12,11 @@ import Tabs from "@/components/Tabs";
 import ProjectList from "@/components/ProjectList";
 import HTMLContent from "@/components/HTMLContent";
 import EmptyData from "@/components/EmptyData";
-import useQuery from "@/helpers/useQuery";
-import useApiLocalePrefix from "@/helpers/useApiLocalePrefix";
-import createQueryClient from "@/helpers/createQueryClient";
-import createQueryKey from "@/helpers/createQueryKey";
-import prepareGlobalData from "@/helpers/prepareGlobalData";
+import useQuery from "@/helpers/api/useQuery";
+import useApiLocalePrefix from "@/helpers/api/useApiLocalePrefix";
+import createQueryClient from "@/helpers/api/createQueryClient";
+import createQueryKey from "@/helpers/api/createQueryKey";
+import prepareGlobalData from "@/helpers/api/prepareGlobalData";
 import {
   revalidatePageSeconds,
   apiInfoPart,
@@ -40,7 +39,6 @@ const tabsInfo = [
 ];
 
 const Home = ({ ...props }) => {
-  const { t } = useTranslation("common");
   const cls = useStyles();
   const localePrefix = useApiLocalePrefix();
   const [activeTab, setActiveTab] = useState(tabsInfo[0].value);
@@ -73,7 +71,7 @@ const Home = ({ ...props }) => {
   };
 
   return (
-    <main>
+    <div>
       <Head>
         <title>
           {mainInfo?.[c.full_name]} | {siteName}
@@ -96,13 +94,18 @@ const Home = ({ ...props }) => {
       <Divider />
       <Paper elevation={3} square>
         <Container>
-          <Tabs list={tabsInfo} value={activeTab} onChange={handleChange} />
+          <Tabs
+            list={tabsInfo}
+            value={activeTab}
+            onChange={handleChange}
+            namespace="home"
+          />
         </Container>
       </Paper>
       <Container>
         <section className={cls.tabContent}>{renderTabContent()}</section>
       </Container>
-    </main>
+    </div>
   );
 };
 

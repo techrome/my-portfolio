@@ -21,7 +21,7 @@ import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import NProgress from "@/components/NProgress";
 import CommonHead from "@/components/CommonHead";
 import GlobalStyles from "@/components/GlobalStyles";
-import createQueryClient from "@/helpers/createQueryClient";
+import createQueryClient from "@/helpers/api/createQueryClient";
 import { wrapper } from "@/redux";
 import { darkModeSet } from "@/redux/actions/app";
 
@@ -109,7 +109,10 @@ function MyApp({ Component, pageProps, isDarkMode, setIsDarkMode, ...props }) {
             >
               <CommonHead />
               <GlobalStyles />
-              <NProgress color={theme.palette.primary.main} />
+              <NProgress
+                color={theme.palette.primary.main}
+                isDarkMode={theme.palette.type === "dark"}
+              />
               <Component {...pageProps} />
               <ReactQueryDevtools initialIsOpen={false} />
             </SnackbarProvider>
