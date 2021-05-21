@@ -2,11 +2,11 @@ import toNumber from "lodash/toNumber";
 import { fs } from "memfs";
 
 import { locales } from "@/i18n.json";
-import defaultQueryFn from "@/helpers/defaultQueryFn";
-import createQueryKey from "@/helpers/createQueryKey";
+import defaultQueryFn from "@/helpers/api/defaultQueryFn";
+import createQueryKey from "@/helpers/api/createQueryKey";
+import * as remoteApi from "@/helpers/api/fileStorageApi";
+import buildSitemapXML from "@/helpers/sitemap/buildSitemapXML";
 import splitArrayIntoChunks from "@/helpers/splitArrayIntoChunks";
-import buildSitemapXML from "@/helpers/buildSitemapXML";
-import * as remoteApi from "@/helpers/fileStorageApi";
 import sleep from "@/helpers/sleep";
 import {
   apiBlogListPart,
@@ -101,7 +101,7 @@ const generateBlogSitemap = async ({ cacheTimestamp }) => {
     const fileName = `${i + 1}.xml`;
     const sitemapFilePath = `${blogSitemapsFolder}/${fileName}`;
 
-    await fs.writeFileSync(sitemapFilePath, readySitemaps[i]);
+    fs.writeFileSync(sitemapFilePath, readySitemaps[i]);
 
     sitemapFilesRemote.push({ name: sitemapFilePath, path: sitemapFilePath });
     sitemapPathsWeb.push(
@@ -109,7 +109,9 @@ const generateBlogSitemap = async ({ cacheTimestamp }) => {
     );
   }
 
-  await remoteApi.uploadFiles(sitemapFilesRemote);
+  if (sitemapFilesRemote.length > 0) {
+    await remoteApi.uploadFiles(sitemapFilesRemote);
+  }
 
   fs.rmdirSync(blogSitemapsFolder, { recursive: true });
 
