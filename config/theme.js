@@ -19,6 +19,9 @@ export const lightThemePalette = {
     default: "#fff",
     paper: "#F5F5F5"
   },
+  action: {
+    disabled: "rgba(180, 180, 180)"
+  },
   linkVisited: "#8A46CE",
   divider: "#C4C4C4",
   tonalOffset: 0.1
@@ -37,6 +40,9 @@ export const darkThemePalette = {
   background: {
     default: "#212121",
     paper: "#333333"
+  },
+  action: {
+    disabled: "rgba(100, 100, 100)"
   },
   linkVisited: "#cb97ff",
   divider: "#6D6D6D",
@@ -156,7 +162,7 @@ theme.typography.caption = {
 
 export const themeLocalesProps = {
   [defaultLocale]: theme.props,
-  ru: ruRU,
+  ru: ruRU.props,
   ka: muiLocaleKa.props
 };
 
