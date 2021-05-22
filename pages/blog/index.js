@@ -173,7 +173,7 @@ const Blog = ({ ...props }) => {
     const cleanQuery = stripQueryFromArrays(router.query);
     const convertedQuery = transformQuery({
       queryObj: cleanQuery,
-      queryMapping,
+      mapping: queryMapping,
       isForServer: true
     });
 

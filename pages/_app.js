@@ -100,6 +100,7 @@ function MyApp({ Component, pageProps, isDarkMode, setIsDarkMode, ...props }) {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles />
       <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
         <QueryClientProvider client={queryClientRef.current}>
           <Hydrate state={pageProps.dehydratedState}>
@@ -108,7 +109,6 @@ function MyApp({ Component, pageProps, isDarkMode, setIsDarkMode, ...props }) {
               maxSnack={4}
             >
               <CommonHead />
-              <GlobalStyles />
               <NProgress
                 color={theme.palette.primary.main}
                 isDarkMode={theme.palette.type === "dark"}
