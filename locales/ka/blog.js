@@ -12,6 +12,7 @@ module.exports = {
   title_desc: "Title - descending",
   foundPosts: {
     0: "პოსტები არ მოიძებნა",
+    1: "მოიძებნა {{count}} პოსტი",
     other: "მოიძებნა {{count}} პოსტი"
   }
 };
