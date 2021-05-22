@@ -10,6 +10,7 @@ const NProgressContainer = ({
   options,
   color,
   spinner,
+  isDarkMode,
   ...props
 }) => {
   const timerRef = useRef(null);
@@ -45,18 +46,17 @@ const NProgressContainer = ({
     <style jsx global>{`
       #nprogress {
         pointer-events: none;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100000;
       }
 
       #nprogress .bar {
         background: ${color};
 
-        position: fixed;
-        z-index: 100000;
-        top: 0;
-        left: 0;
-
         width: 100%;
-        height: 2px;
+        height: ${isDarkMode ? "3" : "2"}px;
       }
 
       #nprogress .peg {

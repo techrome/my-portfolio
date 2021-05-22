@@ -1,5 +1,10 @@
 import React from "react";
-import { Typography, Drawer, IconButton } from "@material-ui/core";
+import {
+  Typography,
+  SwipeableDrawer,
+  IconButton,
+  Paper
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Close } from "@material-ui/icons";
 import clsx from "clsx";
@@ -9,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiPaper-root": {
       width: "100%",
       [theme.breakpoints.up("md")]: {
-        maxWidth: "700px"
+        maxWidth: (props) => props.maxWidth || "700px"
       }
     }
   },
@@ -18,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: theme.spacing(1, 2, 1, 3),
-    borderBottom: `1px solid ${theme.palette.divider}`
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    transition: "border 0.2s"
   },
   drawerHeaderLeft: {
     marginRight: theme.spacing(2)
@@ -36,30 +42,38 @@ const DrawerComponent = ({
   anchor = "right",
   open,
   onClose,
+  onOpen,
   className,
   header,
+  maxWidth,
   ...props
 }) => {
-  const cls = useStyles();
+  const cls = useStyles({ maxWidth });
 
   return (
-    <Drawer
+    <SwipeableDrawer
+      disableSwipeToOpen
+      onOpen={(e) => {
+        onOpen?.(e);
+      }}
       anchor="right"
       open={open}
       onClose={onClose}
       className={clsx(cls.drawer, className)}
       {...props}
     >
-      <div className={cls.drawerHeader}>
-        <div className={cls.drawerHeaderLeft}>
-          <Typography variant="h5">{header}</Typography>
+      <Paper elevation={0} style={{ height: "100%" }} square>
+        <div className={cls.drawerHeader}>
+          <div className={cls.drawerHeaderLeft}>
+            <Typography variant="h5">{header}</Typography>
+          </div>
+          <IconButton onClick={onClose}>
+            <Close />
+          </IconButton>
         </div>
-        <IconButton onClick={onClose}>
-          <Close />
-        </IconButton>
-      </div>
-      <div className={cls.drawerBody}>{props.children}</div>
-    </Drawer>
+        <div className={cls.drawerBody}>{props.children}</div>
+      </Paper>
+    </SwipeableDrawer>
   );
 };
 

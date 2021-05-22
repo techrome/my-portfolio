@@ -8,9 +8,13 @@ import Project, { Skeleton } from "./project";
 import * as c from "@/constants";
 import Drawer from "@/components/Drawer";
 import EmptyData from "@/components/EmptyData";
-import { listItemsPerPage, apiProjectsListPart } from "@/config";
-import useQuery from "@/helpers/useQuery";
-import useApiLocalePrefix from "@/helpers/useApiLocalePrefix";
+import {
+  listItemsPerPage,
+  apiProjectsListPart,
+  showPreviosDataTimeMs
+} from "@/config";
+import useQuery from "@/helpers/api/useQuery";
+import useApiLocalePrefix from "@/helpers/api/useApiLocalePrefix";
 
 const emptySkeletons = [...new Array(listItemsPerPage)];
 
@@ -55,7 +59,7 @@ const ProjectList = ({ ...props }) => {
     open: false
   });
   const [page, setPage] = useState(1);
-  const [showPreviosData, setShowPreviosData] = useState(false);
+  const [showPreviosData, setShowPreviosData] = useState(true);
   const previousDataTimeoutRef = useRef(null);
   const localePrefix = useApiLocalePrefix();
   const queryData = useQuery(
@@ -78,6 +82,9 @@ const ProjectList = ({ ...props }) => {
   );
 
   useEffect(() => {
+    previousDataTimeoutRef.current = setTimeout(() => {
+      setShowPreviosData(false);
+    }, showPreviosDataTimeMs);
     return () => {
       clearTimeout(previousDataTimeoutRef.current);
     };
@@ -97,7 +104,7 @@ const ProjectList = ({ ...props }) => {
     setShowPreviosData(true);
     previousDataTimeoutRef.current = setTimeout(() => {
       setShowPreviosData(false);
-    }, 300);
+    }, showPreviosDataTimeMs);
   };
 
   const loading = isLoading || (isFetching && !showPreviosData);

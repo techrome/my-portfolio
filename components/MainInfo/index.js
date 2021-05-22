@@ -8,8 +8,8 @@ import SvgIcon from "@/components/SvgIcon";
 import EmptyData from "@/components/EmptyData";
 import * as c from "@/constants";
 import { iconGlobalClassName, apiInfoPart } from "@/config";
-import useApiLocalePrefix from "@/helpers/useApiLocalePrefix";
-import useQuery from "@/helpers/useQuery";
+import useApiLocalePrefix from "@/helpers/api/useApiLocalePrefix";
+import useQuery from "@/helpers/api/useQuery";
 
 const useStyles = makeStyles(
   (theme) => ({

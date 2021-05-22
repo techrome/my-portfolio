@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TabsComponent = ({ list, value, onChange, ...props }) => {
+const TabsComponent = ({ list, value, onChange, namespace, ...props }) => {
   const cls = useStyles();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(namespace || "common");
 
   return (
     <div className={cls.main}>

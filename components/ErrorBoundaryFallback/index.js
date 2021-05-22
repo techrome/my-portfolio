@@ -1,9 +1,25 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
+import { makeStyles } from "@material-ui/core/styles";
 
-import useStyles from "./styles";
+import Button from "@/components/Button";
 import { defaultLocale } from "@/config";
+
+const useStyles = makeStyles(
+  (theme) => ({
+    main: {
+      height: "100vh",
+      width: "100%",
+      backgroundColor: theme.palette.background.paper,
+      padding: "100px 30px"
+    },
+    error: {
+      marginBottom: "30px"
+    }
+  }),
+  { index: 1 }
+);
 
 const locales = {
   [defaultLocale]: {
@@ -32,13 +48,20 @@ const ErrorBoundaryFallback = ({ error, resetErrorBoundary, ...props }) => {
   return (
     <div className={cls.main}>
       <ErrorIcon style={{ fontSize: "50px" }} color="error" />
-      <p className={cls.description}>
+      <Typography variant="h3" gutterBottom>
         {locales[lang]
           ? locales[lang].description
           : locales[defaultLocale].description}
-      </p>
-      <p className={cls.error}>{error?.message || "No error description"}</p>
-      <Button variant="contained" color="default" onClick={resetErrorBoundary}>
+      </Typography>
+      <Typography color="error" variant="h5" className={cls.error}>
+        {error?.message || "No error description"}
+      </Typography>
+      <Button
+        variant="contained"
+        color="default"
+        size="large"
+        onClick={resetErrorBoundary}
+      >
         {locales[lang] ? locales[lang].button : locales[defaultLocale].button}
       </Button>
     </div>

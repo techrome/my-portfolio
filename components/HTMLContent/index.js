@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     "& a": {
       color: theme.palette.primary.main,
       textDecoration: "underline",
+      fontWeight: "bold",
       "&:hover": {
         textDecoration: "none"
       },
@@ -24,7 +25,10 @@ const HTMLContent = ({ innerHTML, ...props }) => {
   const cls = useStyles();
 
   return (
-    <div className={cls.main} dangerouslySetInnerHTML={{ __html: innerHTML }} />
+    <article
+      className={cls.main}
+      dangerouslySetInnerHTML={{ __html: innerHTML }}
+    />
   );
 };
 

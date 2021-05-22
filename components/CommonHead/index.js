@@ -4,19 +4,18 @@ import Head from "next/head";
 
 import { locales } from "@/i18n.json";
 import { prodUrl } from "@/config";
+import removeQueryHashFromUrl from "@/helpers/removeQueryHashFromUrl";
 
 const CommonHead = ({ ...props }) => {
   const router = useRouter();
+  const cleanPath = removeQueryHashFromUrl(router.asPath);
 
   return (
     <Head>
-      <link
-        rel="canonical"
-        href={`${prodUrl}/${router.locale}${router.pathname}`}
-      />
+      <link rel="canonical" href={`${prodUrl}/${router.locale}${cleanPath}`} />
       <link
         rel="alternate"
-        href={`${prodUrl}${router.pathname}`}
+        href={`${prodUrl}${cleanPath}`}
         hrefLang="x-default"
       />
       <>
@@ -24,7 +23,7 @@ const CommonHead = ({ ...props }) => {
           <link
             key={index}
             rel="alternate"
-            href={`${prodUrl}/${loc}${router.pathname}`}
+            href={`${prodUrl}/${loc}${cleanPath}`}
             hrefLang={loc}
           />
         ))}
@@ -46,7 +45,7 @@ const CommonHead = ({ ...props }) => {
         sizes="16x16"
         href="/favicon-16x16.png"
       />
-      <meta property="og:url" content={`${prodUrl}${router.pathname}`} />
+      <meta key="og:url" property="og:url" content={`${prodUrl}${cleanPath}`} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
   );

@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { Skeleton as MuiSkeleton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkIcon, Code, InfoOutlined } from "@material-ui/icons";
 import domPurify from "dompurify";
 
 import * as c from "@/constants";
+import Button from "@/components/Button";
 import FlexList from "@/components/FlexList";
 import HTMLContent from "@/components/HTMLContent";
 import useTranslation from "next-translate/useTranslation";
@@ -54,7 +55,7 @@ const useStyles = makeStyles(
 
 const Buttons = ({ data, onDetailsClick, ...props }) => {
   const cls = useStyles();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
 
   return (
     <FlexList spacing={2}>
