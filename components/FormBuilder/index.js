@@ -8,11 +8,50 @@ import React, {
   useCallback
 } from "react";
 import dynamic from "next/dynamic";
-import { Grid, FormLabel, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import useTranslation from "next-translate/useTranslation";
 import isString from "lodash/isString";
 import isFunction from "lodash/isFunction";
+
+/*
+  Benefits:
+    1. Build forms by config with the least code required
+    2. Scroll to first validation
+    3. Grid support
+    4. Full control of fields by props and onFieldChange
+    5. Full control of form state by ref
+    6. Hide/disable fields whenever
+    7. Custom field components
+
+  Drawbacks:
+    1. Full re-render on any change
+      (My philosophy is that forms shouldn't be too big (max 10-15)
+        because it harms UX and if you really want, you can always
+        split the form)
+    2. No support for dynamically adding new fields
+      (Except by using hidden fields, but only the predetermined 
+        amount of fields)
+    3. Manually have to validate everything
+    4. ... may be more
+    
+    I wanted this Form Builder to be just "good enough" for most cases
+    and be simple enough to build forms. Indeed it doesn't cover all the 
+    cases, but it's just "good enough" for me IMO
+*/
+
+const defaultEmptyValues = {
+  input: "",
+  checkbox: false,
+  checkboxGroup: [],
+  date: null,
+  dateTime: null,
+  time: null,
+  radio: "",
+  select: null,
+  file: [],
+  editor: ""
+};
 
 const importedFields = {
   input: dynamic(() => import("@/components/Fields/input")),
@@ -69,7 +108,11 @@ const FormBuilder = forwardRef(
             ...acc,
             [curr.name]:
               memoizedDefaultValues[curr.name] ||
-              (curr.hasOwnProperty("emptyValue") ? curr.emptyValue : "")
+              (curr.hasOwnProperty("emptyValue")
+                ? curr.emptyValue
+                : defaultEmptyValues.hasOwnProperty(curr.fieldType)
+                ? defaultEmptyValues[curr.fieldType]
+                : "")
           };
         }, {}),
         disabledFields: memoizedConfig.fields.reduce((acc, curr) => {
@@ -99,6 +142,8 @@ const FormBuilder = forwardRef(
             ...acc,
             [curr.name]: curr.hasOwnProperty("emptyValue")
               ? curr.emptyValue
+              : defaultEmptyValues.hasOwnProperty(curr.fieldType)
+              ? defaultEmptyValues[curr.fieldType]
               : ""
           };
         }, {}),

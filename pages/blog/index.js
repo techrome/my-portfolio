@@ -64,19 +64,16 @@ const filtersFormConfig = {
     {
       name: c.date_after,
       fieldType: "dateTime",
-      emptyValue: null,
       placeholder: "after"
     },
     {
       name: c.date_before,
       fieldType: "dateTime",
-      emptyValue: null,
       placeholder: "before"
     },
     {
       name: c.sort,
       fieldType: "select",
-      emptyValue: null,
       placeholder: "sort by"
     }
   ]
