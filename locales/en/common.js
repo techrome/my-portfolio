@@ -8,10 +8,21 @@ module.exports = {
   _russian: "Русский",
   "change language": "Change language",
   "toggle color theme": "Toggle light/dark theme",
-  "my projects": "My projects",
-  "about me": "About me",
-  "visit website": "Visit website",
-  "source code": "Source code",
-  details: "Details",
-  "data not found": "Data not found"
+  "data not found": "Data not found",
+  // start date picker messages
+  dateErrorInvalid: "Invalid Date Format",
+  dateErrorMax: "Date should not be after maximal date",
+  dateErrorMin: "Date should not be before minimal date",
+  ok: "OK",
+  cancel: "Cancel",
+  clear: "Clear",
+  today: "Today",
+  // end date picker messages
+
+  // start file upload
+  "choose file": "Choose file",
+  fileUploadCount: "files",
+  // end file upload
+  menu: "Menu",
+  blog: "Blog"
 };

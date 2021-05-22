@@ -8,10 +8,21 @@ module.exports = {
   _russian: "Русский",
   "change language": "ენის შეცვლა",
   "toggle color theme": "ღამის/დღის რეჟიმის გადართვა",
-  "my projects": "ჩემი პროექტები",
-  "about me": "ჩემ შესახებ",
-  "visit website": "საიტის ნახვა",
-  "source code": "კოდის ნახვა",
-  details: "დეტალები",
-  "data not found": "მონაცემები ვერ მოიძებნა"
+  "data not found": "მონაცემები ვერ მოიძებნა",
+  // start date picker messages
+  dateErrorInvalid: "თარიღის ფორმატი არასწორია",
+  dateErrorMax: "თარიღი არ უნდა იყოს მაქსიმალური თარიღის შემდეგ",
+  dateErrorMin: "თარიღი არ უნდა იყოს მინიმალურ თარიღამდე",
+  ok: "ოკ",
+  cancel: "გაუქმება",
+  clear: "წაშლა",
+  today: "დღეს",
+  // end date picker messages
+
+  // start file upload
+  "choose file": "აირჩიეთ ფაილი",
+  fileUploadCount: "ფაილი",
+  // end file upload
+  menu: "მენიუ",
+  blog: "ბლოგი"
 };
