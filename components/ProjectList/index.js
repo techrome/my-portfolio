@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useRef, useEffect } from "react";
 import { Typography, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Pagination } from "@material-ui/lab";
 import toNumber from "lodash/toNumber";
 
 import Project, { Skeleton } from "./project";
 import * as c from "@/constants";
 import Drawer from "@/components/Drawer";
 import EmptyData from "@/components/EmptyData";
+import Pagination from "@/components/Pagination";
 import {
   listItemsPerPage,
   apiProjectsListPart,
@@ -22,13 +22,6 @@ const useStyles = makeStyles(
   (theme) => ({
     divider: {
       margin: theme.spacing(3, 0)
-    },
-    pagination: {
-      marginTop: theme.spacing(2),
-      "& .MuiPagination-root": {
-        display: "flex",
-        justifyContent: "center"
-      }
     }
   }),
   { index: 1 }
@@ -132,15 +125,13 @@ const ProjectList = ({ ...props }) => {
         <EmptyData />
       )}
       {!loading && success && (
-        <div className={cls.pagination}>
-          <Pagination
-            color="primary"
-            page={page}
-            count={totalPages}
-            onChange={onPageChange}
-            size="large"
-          />
-        </div>
+        <Pagination
+          color="primary"
+          page={page}
+          count={totalPages}
+          onChange={onPageChange}
+          size="large"
+        />
       )}
     </>
   );
