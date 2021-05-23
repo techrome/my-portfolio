@@ -4,15 +4,19 @@ module.exports = {
   blogDescription:
     "ჩემი პერსონალური ბლოგი. აქ მე გავაზიარებ სხვადასხვა სასარგებლო ინფორმაციას ვებ დეველოპმენტის შესახებ",
   search: "ძებნა",
-  filters: "Filters",
-  after: "After",
-  before: "Before",
-  "sort by": "Sort by",
-  title_asc: "Title - ascending",
-  title_desc: "Title - descending",
+  filters: "ფილტრები",
+  after: "ამ თარიღის შემდეგ",
+  before: "ამ თარიღამდე",
+  "sort by": "სორტირება",
+  title_asc: "სახელი - ზრდადობით",
+  title_desc: "სახელი - კლებადობით",
+  date_created_asc: "შექმნის თარიღი - ზრდადობით",
+  date_created_desc: "შექმნის თარიღი - კლებადობით",
   foundPosts: {
     0: "პოსტები არ მოიძებნა",
     1: "მოიძებნა {{count}} პოსტი",
     other: "მოიძებნა {{count}} პოსტი"
-  }
+  },
+  created: "შექმნილია",
+  updated: "განახლებულია"
 };

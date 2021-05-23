@@ -13,7 +13,7 @@ module.exports = {
   dateErrorInvalid: "Неверный формат даты",
   dateErrorMax: "Дата не должна быть после максимальной даты",
   dateErrorMin: "Дата не должна быть до минимальной даты",
-  ok: "ОК",
+  ok: "OK",
   cancel: "Отмена",
   clear: "Очистить",
   today: "Сегодня",

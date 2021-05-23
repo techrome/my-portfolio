@@ -10,9 +10,13 @@ module.exports = {
   "sort by": "Sort by",
   title_asc: "Title - ascending",
   title_desc: "Title - descending",
+  date_created_asc: "Date created - ascending",
+  date_created_desc: "Date created - descending",
   foundPosts: {
     0: "Posts not found",
     one: "Found {{count}} post",
     other: "Found {{count}} posts"
-  }
+  },
+  created: "Created",
+  updated: "Updated"
 };

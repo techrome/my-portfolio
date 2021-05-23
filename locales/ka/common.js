@@ -13,7 +13,7 @@ module.exports = {
   dateErrorInvalid: "თარიღის ფორმატი არასწორია",
   dateErrorMax: "თარიღი არ უნდა იყოს მაქსიმალური თარიღის შემდეგ",
   dateErrorMin: "თარიღი არ უნდა იყოს მინიმალურ თარიღამდე",
-  ok: "ოკ",
+  ok: "OK",
   cancel: "გაუქმება",
   clear: "წაშლა",
   today: "დღეს",
