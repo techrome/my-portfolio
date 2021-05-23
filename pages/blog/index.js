@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect
+} from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Close, Search, FilterList } from "@material-ui/icons";
@@ -11,14 +17,9 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import useTranslation from "next-translate/useTranslation";
 import { dehydrate } from "react-query/hydration";
-import qs from "query-string";
-import {
-  format as formatDate,
-  parse as parseDate,
-  isValid as isValidDate
-} from "date-fns";
-import toNumber from "lodash/toNumber";
+import dayjs from "dayjs";
 import debounce from "lodash/debounce";
+import toNumber from "lodash/toNumber";
 
 import WithLayout from "@/components/WithLayout";
 import Container from "@/components/Container";
@@ -27,8 +28,8 @@ import Input from "@/components/Fields/input";
 import Button from "@/components/Button";
 import Drawer from "@/components/Drawer";
 import FormBuilder from "@/components/FormBuilder";
-import TextEllipsis from "@/components/TextEllipsis";
-import EmptyData from "@/components/EmptyData";
+import BlogPostList from "@/components/BlogPostList";
+import Pagination from "@/components/Pagination";
 import useQuery from "@/helpers/api/useQuery";
 import useApiLocalePrefix from "@/helpers/api/useApiLocalePrefix";
 import createQueryClient from "@/helpers/api/createQueryClient";
@@ -42,7 +43,8 @@ import {
   listItemsPerPage,
   siteName,
   defaultLocale,
-  dateTimeFormat
+  dateTimeFormat,
+  showPreviosDataTimeMs
 } from "@/config";
 import * as c from "@/constants";
 
@@ -113,10 +115,10 @@ const initialFilters = {
 
 const convertAdvancedFilters = (filters) => {
   const dateAfter = filters[c.date_after]
-    ? formatDate(filters[c.date_after], dateTimeFormat)
+    ? dayjs(filters[c.date_after]).format(dateTimeFormat)
     : initialFilters[c.date_after];
   const dateBefore = filters[c.date_before]
-    ? formatDate(filters[c.date_before], dateTimeFormat)
+    ? dayjs(filters[c.date_before]).format(dateTimeFormat)
     : initialFilters[c.date_before];
   const sortValue = filters[c.sort]
     ? filters[c.sort].value
@@ -137,6 +139,8 @@ const Blog = ({ ...props }) => {
   const router = useRouter();
   const [filters, setFilters] = useState(initialFilters);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showPreviosData, setShowPreviosData] = useState(true);
+  const previousDataTimeoutRef = useRef(null);
 
   const hasAdvancedFilters =
     !!filters[c.date_after] || !!filters[c.date_before] || !!filters[c.sort];
@@ -150,6 +154,14 @@ const Blog = ({ ...props }) => {
       {
         title: t("title_desc"),
         value: `${c.content}.${c.title}:${c.desc}`
+      },
+      {
+        title: t("date_created_asc"),
+        value: `${c.first_published_at}:${c.asc}`
+      },
+      {
+        title: t("date_created_desc"),
+        value: `${c.first_published_at}:${c.desc}`
       }
     ],
     []
@@ -157,7 +169,7 @@ const Blog = ({ ...props }) => {
 
   const queryParams = useMemo(() => {
     let resultServerQuery = {
-      [c.page]: filters[c.page]
+      [c.page]: initialFilters[c.page]
     };
     let resultFilters = {
       ...filters
@@ -175,15 +187,16 @@ const Blog = ({ ...props }) => {
     });
 
     // kill me
-    resultFilters[c.page] = cleanQuery[c.page] || initialFilters[c.page];
+    resultFilters[c.page] =
+      toNumber(cleanQuery[c.page]) || initialFilters[c.page];
     resultFilters[c.search] = cleanQuery[c.search] || initialFilters[c.search];
 
     resultFilters[c.date_after] = cleanQuery[c.date_after]
-      ? parseDate(cleanQuery[c.date_after], dateTimeFormat, new Date())
+      ? dayjs(cleanQuery[c.date_after])
       : initialFilters[c.date_after];
 
     resultFilters[c.date_before] = cleanQuery[c.date_before]
-      ? parseDate(cleanQuery[c.date_before], dateTimeFormat, new Date())
+      ? dayjs(cleanQuery[c.date_before])
       : initialFilters[c.date_before];
 
     resultFilters[c.sort] = cleanQuery[c.sort]
@@ -203,7 +216,20 @@ const Blog = ({ ...props }) => {
   }, [router.query, router.isReady]);
 
   const pushQuery = useCallback((query) => {
-    router.push({ path: "/blog", query }, undefined, { shallow: true });
+    clearTimeout(previousDataTimeoutRef.current);
+
+    setShowPreviosData(true);
+    previousDataTimeoutRef.current = setTimeout(() => {
+      setShowPreviosData(false);
+    }, showPreviosDataTimeMs);
+
+    router
+      .push({ path: "/blog", query }, undefined, {
+        shallow: true
+      })
+      .then(() => {
+        window.scrollTo(0, 0);
+      });
   }, []);
 
   const debouncedPushQuery = useCallback(debounce(pushQuery, 400), []);
@@ -219,7 +245,19 @@ const Blog = ({ ...props }) => {
     };
     const filtersForQuery = convertAdvancedFilters(updatedFilters);
     setFilters(updatedFilters);
-    debouncedPushQuery(filtersForQuery);
+    debouncedPushQuery({
+      ...filtersForQuery,
+      [c.page]: initialFilters[c.page]
+    });
+  };
+
+  const onPageChange = (e, value) => {
+    const updatedFilters = {
+      ...filters,
+      [c.page]: value
+    };
+    const filtersForQuery = convertAdvancedFilters(updatedFilters);
+    pushQuery(filtersForQuery);
   };
 
   const queryData = useQuery(
@@ -235,6 +273,26 @@ const Blog = ({ ...props }) => {
     ],
     { keepPreviousData: true }
   );
+
+  const { data, isLoading, isSuccess, isFetching, isPreviousData } = queryData;
+  const blogPosts = data?.data?.[c.stories];
+  const totalPages = Math.ceil(
+    toNumber(data?.headers?.[c.total]) / listItemsPerPage
+  );
+
+  const loading = isLoading || (isFetching && !showPreviosData);
+  const success = isSuccess || isPreviousData;
+  const hasBlogPosts = blogPosts?.length > 0;
+
+  useEffect(() => {
+    previousDataTimeoutRef.current = setTimeout(() => {
+      setShowPreviosData(false);
+    }, showPreviosDataTimeMs);
+    return () => {
+      debouncedPushQuery.cancel();
+      clearTimeout(previousDataTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <div className={cls.main}>
@@ -284,7 +342,8 @@ const Blog = ({ ...props }) => {
 
                       pushQuery({
                         ...filters,
-                        ...convertedFilters
+                        ...convertedFilters,
+                        [c.page]: initialFilters[c.page]
                       });
                       closeDrawer();
                     }}
@@ -348,14 +407,14 @@ const Blog = ({ ...props }) => {
                     setDrawerOpen(true);
                   }}
                 >
-                  Filters
+                  {t("filters")}
                 </Button>
                 {hasAdvancedFilters && (
                   <IconButton
                     onClick={() => {
                       pushQuery({
                         ...initialFilters,
-                        [c.page]: filters[c.page],
+                        [c.page]: initialFilters[c.page],
                         [c.search]: filters[c.search]
                       });
                     }}
@@ -369,10 +428,19 @@ const Blog = ({ ...props }) => {
         </div>
         <Typography>
           {t("foundPosts", {
-            count: queryData?.data?.data?.[c.stories]?.length || 0
+            count: toNumber(data?.headers?.[c.total]) || 0
           })}
         </Typography>
-        <pre>{JSON.stringify(queryData, 0, 2)}</pre>
+        <BlogPostList list={blogPosts} loading={loading} />
+        {!loading && hasBlogPosts && success && (
+          <Pagination
+            color="primary"
+            page={filters[c.page]}
+            count={totalPages}
+            onChange={onPageChange}
+            size="large"
+          />
+        )}
       </Container>
     </div>
   );

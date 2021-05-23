@@ -153,7 +153,9 @@ theme.typography.button = {
 };
 theme.typography.overline = {
   fontSize: "12px",
-  fontWeight: 400
+  fontWeight: 400,
+  lineHeight: 1.5,
+  textTransform: "none"
 };
 theme.typography.caption = {
   fontSize: "10px",

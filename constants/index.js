@@ -41,3 +41,6 @@ export const date_after = "date_after";
 export const sort = "sort";
 export const asc = "asc";
 export const desc = "desc";
+export const created_at = "created_at";
+export const published_at = "published_at";
+export const first_published_at = "first_published_at";
