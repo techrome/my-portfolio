@@ -6,7 +6,7 @@ import {
   IconButton
 } from "@material-ui/core";
 import { Event, Close } from "@material-ui/icons";
-import DateFnsUtils from "@date-io/date-fns";
+import DayjsUtils from "@date-io/dayjs";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import useTranslation from "next-translate/useTranslation";
 
@@ -30,7 +30,7 @@ const DefaultDateTime = ({
     <div>
       {!!label && <Label disabled={disabled}>{label}</Label>}
       <div>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiPickersUtilsProvider utils={DayjsUtils}>
           <DateTimePicker
             value={value}
             onChange={onChange}

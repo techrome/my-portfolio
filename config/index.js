@@ -33,6 +33,8 @@ export const maxQueryListItems = 100;
 
 export const showPreviosDataTimeMs = 300;
 
-export const dateFormat = "yyyy-MM-dd";
+export const dateFormat = "YYYY-MM-DD";
 export const timeFormat = "HH:mm";
 export const dateTimeFormat = `${dateFormat} ${timeFormat}`;
+
+export const dateFormatPretty = "DD MMMM YYYY";
